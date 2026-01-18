@@ -1,0 +1,7 @@
+{
+  "name": "Copy of Ilimitadamente Grei - Hipnosis Personalizada",
+  "description": "Una plataforma de transformación personal que utiliza hipnosis clínica personalizada potenciada por IA para reprogramar tu mente subconsciente.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
