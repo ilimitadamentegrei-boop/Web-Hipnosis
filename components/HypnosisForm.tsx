@@ -1,124 +1,126 @@
-import React from "react";
-import type { HypnosisFormData } from "../types";
+import React, { useState } from 'react';
+import { HypnosisFormData } from '../types';
 
-type Props = {
+interface HypnosisFormProps {
   onSubmit: (data: HypnosisFormData) => void;
-  isLoading?: boolean;
-};
+  onBack: () => void;
+}
 
-export function HypnosisForm({ onSubmit, isLoading }: Props) {
-  const [name, setName] = React.useState("");
-  const [goal, setGoal] = React.useState("");
-  const [tone, setTone] = React.useState<"maternal" | "neutral" | "direct">(
-    "maternal"
-  );
-  const [duration, setDuration] = React.useState<
-    "7-10" | "10-15" | "15-20"
-  >("7-10");
+export const HypnosisForm: React.FC<HypnosisFormProps> = ({ onSubmit, onBack }) => {
+  const [formData, setFormData] = useState<HypnosisFormData>({
+    name: '',
+    primaryGoal: '',
+    biggestObstacle: '',
+    currentFeeling: '',
+    sessionDuration: '3',
+    voiceType: 'Kore'
+  });
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const payload: HypnosisFormData = {
-      name,
-      goal,
-      tone,
-      duration,
-    };
-
-    onSubmit(payload);
-  }
+    onSubmit(formData);
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        maxWidth: 520,
-        margin: "0 auto",
-        display: "grid",
-        gap: 16,
-      }}
-    >
-      <label>
-        <div style={{ fontSize: 14, marginBottom: 6 }}>Nombre</div>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Tu nombre"
-          required
-          style={{ width: "100%", padding: 12, borderRadius: 10 }}
-        />
-      </label>
-
-      <label>
-        <div style={{ fontSize: 14, marginBottom: 6 }}>
-          ¿Qué deseas trabajar?
-        </div>
-        <textarea
-          value={goal}
-          onChange={(e) => setGoal(e.target.value)}
-          placeholder="Ej: Calmar ansiedad, dormir mejor, soltar miedo…"
-          required
-          rows={4}
-          style={{ width: "100%", padding: 12, borderRadius: 10 }}
-        />
-      </label>
-
-      <div
-        style={{
-          display: "grid",
-          gap: 10,
-          gridTemplateColumns: "1fr 1fr",
-        }}
+    <div className="min-h-screen pt-28 pb-12 px-6 max-w-2xl mx-auto">
+      <button
+        onClick={onBack}
+        className="mb-8 text-slate-400 hover:text-white flex items-center gap-2 transition-colors"
       >
-        <label>
-          <div style={{ fontSize: 14, marginBottom: 6 }}>Tono</div>
-          <select
-            value={tone}
-            onChange={(e) =>
-              setTone(e.target.value as "maternal" | "neutral" | "direct")
-            }
-            style={{ width: "100%", padding: 12, borderRadius: 10 }}
-          >
-            <option value="maternal">Maternal</option>
-            <option value="neutral">Neutral</option>
-            <option value="direct">Directo</option>
-          </select>
-        </label>
+        ← Volver
+      </button>
 
-        <label>
-          <div style={{ fontSize: 14, marginBottom: 6 }}>Duración</div>
-          <select
-            value={duration}
-            onChange={(e) =>
-              setDuration(e.target.value as "7-10" | "10-15" | "15-20")
-            }
-            style={{ width: "100%", padding: 12, borderRadius: 10 }}
-          >
-            <option value="7-10">7–10 min</option>
-            <option value="10-15">10–15 min</option>
-            <option value="15-20">15–20 min</option>
-          </select>
-        </label>
+      <div className="mb-12">
+        <h2 className="text-3xl font-bold mb-2">Tu Sesión Personalizada</h2>
+        <p className="text-slate-400">
+          Necesito entender tu mente para poder reprogramarla con precisión quirúrgica.
+        </p>
       </div>
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        style={{
-          marginTop: 10,
-          padding: 14,
-          borderRadius: 12,
-          border: "none",
-          cursor: "pointer",
-          fontSize: 16,
-          background: "#111",
-          color: "#fff",
-          opacity: isLoading ? 0.7 : 1,
-        }}
-      >
-        {isLoading ? "Generando..." : "Crear sesión"}
-      </button>
-    </form>
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-slate-300">¿Cómo te llamas?</label>
+          <input
+            required
+            type="text"
+            placeholder="Tu nombre"
+            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-slate-300">¿Cuál es tu objetivo principal hoy?</label>
+          <select
+            required
+            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+            value={formData.primaryGoal}
+            onChange={(e) => setFormData({ ...formData, primaryGoal: e.target.value })}
+          >
+            <option value="">Selecciona un objetivo</option>
+            <option value="Superar la ansiedad y el estrés">Superar ansiedad/estrés</option>
+            <option value="Dormir profundamente y descansar">Sueño reparador</option>
+            <option value="Aumentar mi productividad y enfoque">Productividad máxima</option>
+            <option value="Elevar mi autoconfianza y merecimiento">Confianza radical</option>
+            <option value="Sanar una relación del pasado">Sanar relaciones</option>
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-slate-300">
+            ¿Cuál es el pensamiento que más te limita ahora mismo?
+          </label>
+          <textarea
+            required
+            placeholder="Ej: 'No soy lo suficientemente bueno', 'Tengo miedo al fracaso'..."
+            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all h-32"
+            value={formData.biggestObstacle}
+            onChange={(e) => setFormData({ ...formData, biggestObstacle: e.target.value })}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-300">Duración de la sesión</label>
+            <div className="grid grid-cols-1 gap-2">
+              {['3'].map((d) => (
+                <button
+                  key={d}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, sessionDuration: d as any })}
+                  className={`py-3 rounded-lg border ${
+                    formData.sessionDuration === d
+                      ? 'bg-blue-600 border-blue-500'
+                      : 'bg-slate-900 border-slate-700'
+                  } transition-all`}
+                >
+                  {d}m
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-300">Estilo de Voz de Grei (Femenina)</label>
+            <select
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              value={formData.voiceType}
+              onChange={(e) => setFormData({ ...formData, voiceType: e.target.value as any })}
+            >
+              <option value="Kore">Grei - Suave y Maternal</option>
+              <option value="Puck">Grei - Directa y Energética</option>
+            </select>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-500/20 text-lg"
+        >
+          Crear mi Sesión de Hipnosis
+        </button>
+      </form>
+    </div>
   );
-}
+};
