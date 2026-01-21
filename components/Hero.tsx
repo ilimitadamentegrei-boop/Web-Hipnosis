@@ -1,15 +1,30 @@
-<div className="flex gap-4">
-  <button
-    onClick={onStartSession}
-    className="px-8 py-3 bg-blue-600 rounded-full font-bold"
-  >
-    Comenzar sesión
-  </button>
+import React from "react";
 
-  <button
-    onClick={() => onScrollTo("science")}
-    className="px-8 py-3 border border-slate-700 rounded-full"
-  >
-    Ver la ciencia
-  </button>
-</div>
+type Props = {
+  onScrollTo: (id: string) => void;
+};
+
+export const Héroe: React.FC<Props> = ({ onScrollTo }) => {
+  return (
+    <section className="min-h-screen flex flex-col items-center justify-center text-center px-6">
+      <h1 className="text-5xl md:text-6xl font-bold mb-6 italic">
+        Reprograma tu mente.
+      </h1>
+
+      <p className="max-w-2xl text-slate-400 mb-10">
+        Sesiones de hipnosis clínica diseñadas para acceder a tu subconsciente y
+        liberar patrones que ya no te pertenecen.
+      </p>
+
+      {/* ✅ SOLO dejamos "Ver la ciencia" */}
+      <div className="flex gap-4">
+        <button
+          onClick={() => onScrollTo("science")}
+          className="px-8 py-3 border border-slate-700 rounded-full hover:border-slate-400 transition-all"
+        >
+          Ver la ciencia
+        </button>
+      </div>
+    </section>
+  );
+};
