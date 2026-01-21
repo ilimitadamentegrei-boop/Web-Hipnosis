@@ -66,10 +66,31 @@ const Aplicación: React.FC = () => {
       <main>
         {/* HOME */}
         {state === AppState.HOME && (
-          <Héroe
-            onScrollTo={scrollToSection}
-            onStartSession={() => setState(AppState.FORM)}
-          />
+          <>
+            <Héroe onScrollTo={scrollToSection} />
+
+            {/* CTA FINAL — DESPUÉS DE TODO */}
+            <section className="py-32 px-6 bg-slate-950">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-4xl font-bold italic mb-6">
+                  Cuando estés lista, tu sesión comienza aquí.
+                </h2>
+
+                <p className="text-slate-400 mb-10 text-lg">
+                  No necesitas creer en nada.
+                  <br />
+                  Solo permitirte unos minutos para volver a tu centro.
+                </p>
+
+                <button
+                  onClick={() => setState(AppState.FORM)}
+                  className="px-10 py-4 bg-blue-600 rounded-full text-lg font-bold hover:bg-blue-500 transition-all"
+                >
+                  Comenzar sesión
+                </button>
+              </div>
+            </section>
+          </>
         )}
 
         {/* FORM */}
