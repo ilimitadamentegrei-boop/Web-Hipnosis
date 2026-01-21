@@ -25,14 +25,15 @@ const App: React.FC = () => {
 
   const handleFormSubmit = async (data: HypnosisFormData) => {
     setState(AppState.GENERATING);
+
     try {
-      setLoadingStep('Analizando tus patrones subconscientes...');
-      const script = await gemini.generateHypnosisScript(data);
+      setLoadingStep('Creando tu sesión...');
+      const result = await gemini.generateSession(data);
 
-      setLoadingStep('Sintonizando la voz...');
-      const audio = await gemini.generateSpeech(script, data.voiceType);
+      // Nota: tu SessionResult espera { script, audioData }
+      // y tu service devuelve { script, audioBase64 }
+      setSessionData({ script: result.script, audioData: result.audioBase64 });
 
-      setSessionData({ script, audioData: audio });
       setState(AppState.SESSION);
     } catch (error) {
       console.error('Session generation failed:', error);
