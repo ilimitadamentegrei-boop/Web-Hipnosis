@@ -16,7 +16,6 @@ export const Héroe: React.FC<Props> = ({ onScrollTo }) => {
         liberar patrones que ya no te pertenecen.
       </p>
 
-      {/* IMPORTANTE: aquí ya NO hay "Comenzar sesión" */}
       <div className="flex gap-4">
         <button
           onClick={() => onScrollTo("science")}
