@@ -4,7 +4,7 @@ type Props = {
   onScrollTo: (id: string) => void;
 };
 
-export const Héroe: React.FC<Props> = ({ onScrollTo }) => {
+export const Hero: React.FC<Props> = ({ onScrollTo }) => {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center text-center px-6">
       <h1 className="text-5xl md:text-6xl font-bold mb-6 italic">
@@ -16,6 +16,7 @@ export const Héroe: React.FC<Props> = ({ onScrollTo }) => {
         liberar patrones que ya no te pertenecen.
       </p>
 
+      {/* ✅ Aquí SOLO dejamos “Ver la ciencia” (quitamos “Comenzar sesión” del Hero) */}
       <div className="flex gap-4">
         <button
           onClick={() => onScrollTo("science")}
