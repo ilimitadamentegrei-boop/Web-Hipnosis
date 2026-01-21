@@ -50,7 +50,9 @@ const Aplicación: React.FC = () => {
         <div className="hidden md:flex gap-8 text-sm text-slate-400">
           <button onClick={() => scrollToSection("science")}>La Ciencia</button>
           <button onClick={() => scrollToSection("about")}>Sobre Grei</button>
-          <button onClick={() => scrollToSection("testimonials")}>Testimonios</button>
+          <button onClick={() => scrollToSection("testimonials")}>
+            Testimonios
+          </button>
         </div>
 
         <button
@@ -62,10 +64,36 @@ const Aplicación: React.FC = () => {
       </nav>
 
       <main>
+        {/* HOME */}
         {state === AppState.HOME && (
-          <Héroe onScrollTo={scrollToSection} />
+          <>
+            <Héroe onScrollTo={scrollToSection} />
+
+            {/* CTA FINAL – DESPUÉS DE TODO EL CONTENIDO */}
+            <section className="py-28 px-6 bg-slate-950">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-4xl font-bold italic mb-6">
+                  Cuando estés lista, tu sesión comienza aquí.
+                </h2>
+
+                <p className="text-slate-400 mb-10 text-lg">
+                  No necesitas creer en nada.
+                  <br />
+                  Solo permitirte unos minutos para volver a tu centro.
+                </p>
+
+                <button
+                  onClick={() => setState(AppState.FORM)}
+                  className="px-10 py-4 bg-blue-600 rounded-full text-lg font-bold hover:bg-blue-500 transition-all"
+                >
+                  Comenzar sesión
+                </button>
+              </div>
+            </section>
+          </>
         )}
 
+        {/* FORM */}
         {state === AppState.FORM && (
           <HypnosisForm
             onSubmit={handleFormSubmit}
@@ -73,6 +101,7 @@ const Aplicación: React.FC = () => {
           />
         )}
 
+        {/* GENERATING */}
         {state === AppState.GENERATING && (
           <div className="min-h-screen flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold mb-4">
@@ -82,6 +111,7 @@ const Aplicación: React.FC = () => {
           </div>
         )}
 
+        {/* SESSION */}
         {state === AppState.SESSION && sessionData && (
           <SessionPlayer
             script={sessionData.script}
